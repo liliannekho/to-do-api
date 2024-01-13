@@ -2,12 +2,13 @@ require('dotenv').config()
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const todo = require('./todo')
 
 const UserSchema = new mongoose.Schema({
     name: {type: String, required: true},
     email: {type: String, required: true, unique: true},
-    password: {type: String, required: true}
-    todos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Todo'}]
+    password: {type: String, required: true},
+    todo: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Todo'}]
 }, {
     timestamps: true
 })
@@ -24,6 +25,6 @@ UserSchema.methods.generateAuthToken = async function(){
     return token
 }
 
-const User = mongoose.model('User', userSchema)
+const User = mongoose.model('User', UserSchema)
 
 module.exports = User
